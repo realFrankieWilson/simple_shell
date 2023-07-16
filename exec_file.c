@@ -1,22 +1,20 @@
 #include "main.h"
 
 /**
- * exec_fn -> executes commands passed by the user
+ * exec_fn -> executes commands passed by the user.
  * @av: arguments vectors from the user.
- * 
- * Return: a void pointer
+ *
+ * Return: a void ptr.
  */
+
 void exec_fn(char **av)
 {
 	char *cmd = NULL;
 
-    if (av)
-    {
-        /* get the command */
-        cmd = av[0];
-
-        /* execution with the execv functin */
-        if (execve(cmd, av, NULL) == -1)
-            perror("Error: ");
-    }
+	if (av)
+	{
+		cmd = av[0];
+		if (execve(cmd, av, NULL) == -1)
+			perror("Error: ");
+	}
 }
