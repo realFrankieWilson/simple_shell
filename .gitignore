@@ -1,9 +1,3 @@
-test-files
-test
-shell
-persing.c
-p
+test_files
 m
-exercise
-eshell
-cop.c
+hsh
