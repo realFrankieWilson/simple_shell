@@ -77,3 +77,25 @@ void print_str(char *str, int new_l)
 	else
 		str = "(null)";
 }
+
+
+/**
+* print_num -> Prints an unsigned number
+* @n: unsigned int to be printed
+*
+* Return: number of numpers printed
+*/
+
+int print_num(int n)
+{
+	unsigned int num = n;
+	int len = 0, slash = 1;
+
+	for (; num / slash; )
+	{
+		len += putchar_('0' + num / slash);
+		num %= slash;
+		slash /= 10;
+	}
+	return (len);
+}

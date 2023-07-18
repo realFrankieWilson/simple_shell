@@ -2,7 +2,6 @@
 
 int main(void)
 {
-	int n = 0;
-	print_str("Hello", n);
+	printf("%d\n", print_num(20));
 	return (0);
 }

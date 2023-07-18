@@ -20,7 +20,6 @@ void cmd_line(char *lineptr, size_t size, int cmd_ctr, char **av)
 	/*check for error */
 	if (nread == -1)
 		free_exit(lineptr);
-	else
 	{
 		buff_array = token_access(lineptr, delim, token_count);
 		if (buff_array[0] == NULL)
@@ -28,15 +27,13 @@ void cmd_line(char *lineptr, size_t size, int cmd_ctr, char **av)
 			single_free(2, buff_array, lineptr);
 			return;
 		}
-		i = built(buff_array, lineptr);
+		i = std_built(buff_array, lineptr);
 		if (i == -1)
 			create_ppid(buff_array, lineptr, cmd_ctr, av);
 		for (i = 0; buff_array[i] != NULL; i++)
 			free(buff_array[i]);
 		single_free(2, buff_array, lineptr);
 	}
-	else
-		free_exit(lineptr);
 }
 
 
@@ -50,8 +47,8 @@ void cmd_line(char *lineptr, size_t size, int cmd_ctr, char **av)
 
 void create_ppid(char **buff_array, char *lineptr, int cmd_ctr, char **av)
 {
-	char *cmd, *tmp_buf;
-	struct stat buf;
+	char *cmd = NULL, *tmp_buf;
+	/*struct stat buf;*/
 	int update, i = 0;
 	pid_t pi_d;
 
@@ -65,7 +62,7 @@ void create_ppid(char **buff_array, char *lineptr, int cmd_ctr, char **av)
 			/* look for file in current directory*/
 			if (update == -1)
 			{
-				error_printing(av[0], cmd_ctr, tmp_buf)
+				error_printing(av[0], cmd_ctr, tmp_buf);
 				print_str(": not found ", 0);
 				single_free(2, lineptr, tmp_buf);
 				for (i = 1; buff_array[i]; i++)
@@ -105,7 +102,7 @@ char **token_access(char *lineptr, const char *delim, int token_count)
 	token_count = count_token(lineptr, delim);
 	if (token_count == -1)
 	{
-		free(lineptr)
+		free(lineptr);
 		return (NULL);
 	}
 	buff_array = token_separator(token_count, lineptr, delim);
@@ -159,7 +156,7 @@ char **token_separator(int token_count, char *lineptr, const char *delim)
 
 int count_token(char *lineptr, const char *delim)
 {
-	char *token = NULL, *strings = NULL;
+	char *token, *strings = NULL;
 	int i = 0;
 
 	strings = str_dup(lineptr);
