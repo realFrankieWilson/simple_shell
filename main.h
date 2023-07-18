@@ -38,5 +38,8 @@ void cd_shell(char *lineptr);
 
 /********** HELPER FUNCTIONS **********/
 int str_len(char *str);
+void double_free(char **ptr);
+void print_error(char *av, int cmd_count, char *cmd);
+void error_executor(char *av, int cmd_count, *tmp_cmd);
 
 #endif /* MAIN_H */
