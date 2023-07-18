@@ -1,8 +1,0 @@
-a
-e
-exe.c
-f
-file.txt
-fork.c
-redirect
-redirect.txt
