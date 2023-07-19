@@ -1,14 +1,14 @@
 #include "main.h"
 
 /**
- * std_built -> interact with builtin functions.
+ * std_built_ins -> interact with builtin functions.
  * @av: Array of arguments passed to the shell.
  * @usr_in: String representing the user input
  *
  * Return: 0 on success. Otherwise -1.
  */
 
-int std_built(char **av, char *usr_in)
+int std_built_ins(char **av, char *usr_in)
 {
 	void (*create)(char *);
 
@@ -16,7 +16,7 @@ int std_built(char **av, char *usr_in)
 	if (create == NULL)
 		return (-1);
 	if (str_cmp("exit", av[0]) == 0)
-		double_free(av);
+		free_twice(av);
 	create(usr_in);
 	return (0);
 }
@@ -32,33 +32,33 @@ int std_built(char **av, char *usr_in)
 void exit_shell(char *usr_in)
 {
 	free(usr_in);
-	print_str("\n", 1);
+	print_s("\n", 1);
 	exit(1);
 }
 
 
 /**
-* find_right_fun -> Finds the right function needed for execution.
+* check_builtin -> Finds the right function needed for execution.
 * @name_fun: Name of the function that is needed.
 *
 * Return: pointer on success. Otherwise NULL.
 */
 
-void (*check_buitin(char *name_fun))(char *name_fun)
+void (*check_builtin(char *name_fun))(char *name_fun)
 {
 	int i = 0;
 
-	built_t buildin[] = {
+	built_t choice_exec[] = {
 		{"exit", exit_shell},
 		{"env", env_shell},
 		{"cd", cd_shell},
 		{NULL, NULL}
 	};
 
-	for (; buildin[i].create != NULL; i++)
+	for (; choice_exec[i].execute != NULL; i++)
 	{
-		if (str_cmp(name_fun, buildin[i].create) == 0)
-			return (buildin[i].f);
+		if (str_cmp(name_fun, choice_exec[i].execute) == 0)
+			return (choice_exec[i].f);
 	}
 	return (NULL);
 }
@@ -86,7 +86,7 @@ void env_shell(__attribute__((__unused__))char *lineptr)
 /**
  * cd_shell -> Changes the current working directory to the parameter passed
  * to cd.
- * @linptr: A string representing the user input
+ * @lineptr: A string representing the user input
  *
  * Return: HOME directory if no parameter is passed.
  */
@@ -109,8 +109,8 @@ void cd_shell(char *lineptr)
 		chdir((environ[i]) + 5);
 	}
 	else if (str_cmp(arv[1], "-") == 0)
-		print_str(arv[1], 0);
+		print_s(arv[1], 0);
 	else
 		chdir(arv[1]);
-	double_free(arv);
+	free_twice(arv);
 }

@@ -7,7 +7,12 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <string.h>
-
+#include <wchar.h>
+#include <signal.h>
+#include <stdarg.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dirent.h>
 
 
 /********** Defined macros *************/
@@ -30,16 +35,39 @@ char **token_separator(int token_count, char *lineptr, const char *delim);
 int count_token(char *lineptr, const char *delim);
 
 /********** THE STD BUILTIN FUNCTIONS **********/
-int std_built(char **av, char *usr_in);
+int std_built_ins(char **av, char *usr_in);
 void exit_shell(char *usr_in);
 void (*check_buitin(char *name_fun))(char *name_fun);
 void env_shell(char *lineptr);
 void cd_shell(char *lineptr);
+void (*create)(char *);
 
-/********** HELPER FUNCTIONS **********/
+
+/********** HELPER FUNCTIONS (general function)**********/
 int str_len(char *str);
-void double_free(char **ptr);
+void twice_free(char **ptr);
 void print_error(char *av, int cmd_count, char *cmd);
-void error_executor(char *av, int cmd_count, *tmp_cmd);
+void error_executor(char *av, int cmd_count, char *tmp_cmd);
+
+/********** PATH FUNCTION FINDER**********/
+char *find_path_int(char *cmd);
+int find_path_index(char *env);
+char **str_separator(int i, char *str);
+char *create_path(char *d_path, char *f_path);
+char *search_diect(char **str_ptr, char *cmd);
+
+/**
+ * struct built_in -> the built in functions.
+ * @built: The name of the build in command.
+ * @f: A pointer to the right builtin function.
+ */
+
+typedef struct build_in
+{
+	char *execute;
+	void (*f)(char *);
+}build_in_t;
+
+extern char **environ;
 
 #endif /* MAIN_H */

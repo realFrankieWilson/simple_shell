@@ -23,12 +23,12 @@ int str_len(char *str)
 
 
 /**
-* double_free -> Free double pointer variables.
+* twice_free -> Free double pointer variables.
 * @ptr: The address of the element to be freed.
 * Return: 0;
 */
 
-void double_free(char **ptr)
+void twice_free(char **ptr)
 {
 	int i = 0;
 
