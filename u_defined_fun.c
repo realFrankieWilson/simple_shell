@@ -63,19 +63,16 @@ char *str_dup(char *org)
  * Return: prints null if no string is printed.
  */
 
-void print_str(char *str, int new_l)
+void print_s(char *str, int new_l)
 {
 	int i = 0;
 
-	if (str != NULL)
-	{
-		for (; str[i] != TRM; i++)
-			write(STDOUT_FILENO, &str[i], 1);
-		if (new_l == 0)
-			write(STDOUT_FILENO, "\n", 1);
-	}
-	else
+	if (str == NULL)
 		str = "(null)";
+	for (; str[i] != TRM; i++)
+		write(STDOUT_FILENO, &str[i], 1);
+	if (new_l == 0)
+		write(STDOUT_FILENO, "\n", 1);
 }
 
 
@@ -91,7 +88,9 @@ int print_num(int n)
 	unsigned int num = n;
 	int len = 0, slash = 1;
 
-	for (; num / slash; )
+	for (; num / slash > 9; )
+		slash *= 10;
+	for (; slash != 0; )
 	{
 		len += putchar_('0' + num / slash);
 		num %= slash;

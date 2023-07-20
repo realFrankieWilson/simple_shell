@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
 * find_path_int-> Acts as an interface for functions that will be to find
 * find the full path of a program.
@@ -8,48 +10,48 @@
 
 char *find_path_int(char *cmd)
 {
-	char **path_token, *direct, cnst, *str = "PATH";
+	char **path_token, *direct, *cnst, *str = "PATH";
 	int i;
 
-	i = find_path_ind(str);
-	path_token = tokenized_pa(i, str);
+	i = find_path(cmd);
+	path_token = str_separator(i, str);
 	if (path_token == NULL)
 		return (NULL);
 
-	direct = direct_search(path_token, cmd);
+	direct = search_direct(path_token, cmd);
 	if (direct == NULL)
 	{
-		double_free(path_token);
+		twice_free(path_token);
 		return (NULL);
 	}
 
-	cnst = build_path(direct, cmd);
+	cnst = create_path(direct, cmd);
 	if (cnst == NULL)
 	{
-		double_free(path_token);
+		twice_free(path_token);
 		return (NULL);
 	}
 
-	double_free(path_token);
+	twice_free(path_token);
 	return (cnst);
 }
 
 
 /**
-* find_path_index -> Finds the index of an environmental variable.
+* find_path -> Finds the index of an environmental variable.
 * @env: Environmental vairable that needs to be found.
 *
 * Return: Index of the environmental variable. Otherwise -1.
 */
 
-int find_path_index(char *env)
+int find_path(char *env)
 {
-	int j, len, i = 0;
+	int j, len = 0, i = 0;
 
 	len = str_len(env);
 	for (; environ[i] != NULL; i++)
 	{
-		for (j = 0, j < len; j++)
+		for (j = 0; j < len; j++)
 		{
 			if (environ[i][j] != env[j])
 				break;
@@ -74,15 +76,16 @@ int find_path_index(char *env)
 char **str_separator(int i, char *str)
 {
 	int len, counter = 0;
-	char **path_token, char *en_var;
+	char **path_token, *en_var;
 	const char *delim = ":\n";
 
 	len = str_len(str);
 	/* moving the ptr len of string plus = sign*/
-	en_var = environ[i] + (len++);
+	en_var = environ[i] + (len + 1);
 	path_token = token_access(en_var, delim, counter);
 	if (path_token == NULL)
 		return (NULL);
+	
 	return (path_token);
 }
 
@@ -102,7 +105,7 @@ char *search_direct(char **str_ptr, char *cmd)
 {
 	struct stat stat_buf;
 	size_t size = 0;
-	char *buf = NULL, wdchar;
+	char *buf = NULL, *wdchar;
 	int i, j;
 
 	/* Read wide characters from stdin */
@@ -153,11 +156,11 @@ char *create_path(char *d_path, char *f_path)
 	cmd_len = str_len(f_path) + 1;
 	len = dir_len + cmd_len;
 
-	create malloc(sizeof(char) * len);
+	create = malloc(sizeof(char) * len);
 	if (create == NULL)
 		return (NULL);
 
-	for (i = 0, i < len; i++)
+	for (i = 0; i < len; i++)
 	{
 		for (j = 0; d_path[j] != '\0'; j++, i++)
 			create[i] = d_path[j];

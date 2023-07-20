@@ -9,16 +9,13 @@
 
 int str_len(char *str)
 {
-	int i = 0;
+	int i;
 
-	if (str != NULL)
-	{
-		for (; str[i] != TRM; i++)
-			;
-		return (i);
-	}
-	else
+	if (str == NULL)
 		return (0);
+	for (i = 0; str[i] != TRM; i++)
+		;
+	return (i);
 }
 
 

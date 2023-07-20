@@ -10,14 +10,14 @@
 
 int std_built_ins(char **av, char *usr_in)
 {
-	void (*create)(char *);
+	void (*build)(char *);
 
-	create = check_create(av[0]);
-	if (create == NULL)
+	build = check_builtin(av[0]);
+	if (build == NULL)
 		return (-1);
 	if (str_cmp("exit", av[0]) == 0)
-		free_twice(av);
-	create(usr_in);
+		twice_free(av);
+	build(usr_in);
 	return (0);
 }
 
@@ -46,19 +46,19 @@ void exit_shell(char *usr_in)
 
 void (*check_builtin(char *name_fun))(char *name_fun)
 {
-	int i = 0;
+	int i;
 
-	built_t choice_exec[] = {
+	buildin_t buildin[] = {
 		{"exit", exit_shell},
 		{"env", env_shell},
 		{"cd", cd_shell},
 		{NULL, NULL}
 	};
 
-	for (; choice_exec[i].execute != NULL; i++)
+	for (i = 0; buildin[i].built != NULL; i++)
 	{
-		if (str_cmp(name_fun, choice_exec[i].execute) == 0)
-			return (choice_exec[i].f);
+		if (str_cmp(name_fun, buildin[i].built) == 0)
+			return (buildin[i].f);
 	}
 	return (NULL);
 }
@@ -71,14 +71,15 @@ void (*check_builtin(char *name_fun))(char *name_fun)
  * Return: Nothing
  */
 
-void env_shell(__attribute__((__unused__))char *lineptr)
+void env_shell(__attribute__((unused))char *lineptr)
 {
-	int i, j = 0;
+	int i, j;
 
 	for (i = 0; environ[i] != NULL; i++)
 	{
 		for (j = 0; environ[i][j] != TRM; j++)
-			write(STDOUT_FILENO, TRM, 1);
+			write(STDOUT_FILENO, &environ[i][j], 1);
+		write(STDOUT_FILENO, "\n", 1);
 	}
 }
 
@@ -100,10 +101,10 @@ void cd_shell(char *lineptr)
 	arv = token_access(lineptr, delim, tk_cnt);
 	if (arv[0] == NULL)
 	{
-		single_free(2, arv, lineptr);
+		free_once(2, arv, lineptr);
 		return;
 	}
-	else if (arv[1] == NULL)
+	if (arv[1] == NULL)
 	{
 		i = find_path("HOME");
 		chdir((environ[i]) + 5);
@@ -112,5 +113,5 @@ void cd_shell(char *lineptr)
 		print_s(arv[1], 0);
 	else
 		chdir(arv[1]);
-	free_twice(arv);
+	twice_free(arv);
 }

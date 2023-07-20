@@ -13,27 +13,28 @@ void cmd_line(char *lineptr, size_t size, int cmd_ctr, char **av)
 	const char *delim = "\n\t ";
 	char **buff_array;
 	ssize_t nread;
-	int token_count = 0, i = 0;
+	int token_count = 0, i;
 
 	write(STDOUT_FILENO, PRMT, str_len(PRMT));
 	nread = getline(&lineptr, &size, stdin);
 	/*check for error */
-	if (nread == -1)
-		free_exit(lineptr);
+	if (nread != -1)
 	{
 		buff_array = token_access(lineptr, delim, token_count);
 		if (buff_array[0] == NULL)
 		{
-			single_free(2, buff_array, lineptr);
+			free_once(2, buff_array, lineptr);
 			return;
 		}
-		i = std_built(buff_array, lineptr);
+		i = std_built_ins(buff_array, lineptr);
 		if (i == -1)
 			create_ppid(buff_array, lineptr, cmd_ctr, av);
 		for (i = 0; buff_array[i] != NULL; i++)
 			free(buff_array[i]);
-		single_free(2, buff_array, lineptr);
+		free_once(2, buff_array, lineptr);
 	}
+	else
+		exit_shell(lineptr);
 }
 
 
@@ -47,8 +48,8 @@ void cmd_line(char *lineptr, size_t size, int cmd_ctr, char **av)
 
 void create_ppid(char **buff_array, char *lineptr, int cmd_ctr, char **av)
 {
-	char *cmd = NULL, *tmp_buf;
-	/*struct stat buf;*/
+	char *cmd, *tmp_buf;
+	struct stat buf;
 	int update, i = 0;
 	pid_t pi_d;
 
@@ -56,15 +57,16 @@ void create_ppid(char **buff_array, char *lineptr, int cmd_ctr, char **av)
 	if (pi_d == 0)
 	{
 		tmp_buf = buff_array[0];
-		cmd = path_finder(buff_array[0]);
+		cmd = find_path_int(buff_array[0]);
 		if (cmd == NULL)
 		{
 			/* look for file in current directory*/
+			update = stat(tmp_buf, &buf);
 			if (update == -1)
 			{
-				error_printing(av[0], cmd_ctr, tmp_buf);
-				print_str(": not found ", 0);
-				single_free(2, lineptr, tmp_buf);
+				error_msg(av[0], cmd_ctr, tmp_buf);
+				print_s(": not found ", 0);
+				free_once(2, lineptr, tmp_buf);
 				for (i = 1; buff_array[i]; i++)
 					free(buff_array[i]);
 				free(buff_array);
@@ -127,14 +129,14 @@ char **token_access(char *lineptr, const char *delim, int token_count)
 char **token_separator(int token_count, char *lineptr, const char *delim)
 {
 	char **buff_array, *token, *temp_line;
-	int i = 0;
+	int i;
 
 	temp_line = str_dup(lineptr);
-	buff_array = malloc(sizeof(char *) * (token_count++));
+	buff_array = malloc(sizeof(char *) * (token_count + 1));
 	if (buff_array == NULL)
 		return (NULL);
 	token = strtok(temp_line, delim);
-	for (; token != NULL; i++)
+	for (i = 0; token != NULL; i++)
 	{
 		buff_array[i] = str_dup(token);
 		token = strtok(NULL, delim);
@@ -156,18 +158,14 @@ char **token_separator(int token_count, char *lineptr, const char *delim)
 
 int count_token(char *lineptr, const char *delim)
 {
-	char *token, *strings = NULL;
+	char *token, *strings = str_dup(lineptr);
 	int i = 0;
 
-	strings = str_dup(lineptr);
-	if (strings != NULL)
-	{
-		token = strtok(strings, delim);
-		for (; token != NULL; i++)
-			token = strtok(NULL, delim);
-		free(strings);
-		return (i);
-	}
-	else
+	if (strings == NULL)
 		return (-1);
+	token = strtok(strings, delim);
+	for (; token != NULL; i++)
+		token = strtok(NULL, delim);
+	free(strings);
+	return (i);
 }
