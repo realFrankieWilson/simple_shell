@@ -2,7 +2,11 @@
 #include <string.h>
 
 /**
+<<<<<<< HEAD
  * swap_ch -> swaps | and & for non-printed chars
+=======
+ * swap_char - swaps | and & for non-printed chars
+>>>>>>> update
  * @in: input string
  * @bo: type of swap
  *
@@ -122,9 +126,15 @@ void go_nxt(sep_list **list_s, line_list **list_l, shell_input *lineptr)
 }
 
 /**
+<<<<<<< HEAD
  * split_cmd -> splits command lines according to
  * the separators ;, | and &, and executes them
  * @lineptr: data structure
+=======
+ * split_cmd - splits command lines according to
+ * the separators ;, | and &, and executes them
+ * @datash: data structure
+>>>>>>> update
  * @input: input string
  *
  * Return: 0 to exit, 1 to continue

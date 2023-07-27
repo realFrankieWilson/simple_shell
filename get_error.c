@@ -4,7 +4,11 @@
  * get_error - calls the error according the builtin, syntax or permission
  * @lineptr: data structure that contains arguments
  * @eval: error value
+<<<<<<< HEAD
  *
+=======
+ * 
+>>>>>>> update
  * Return: error
  */
 int get_error(shell_input *lineptr, int eval)

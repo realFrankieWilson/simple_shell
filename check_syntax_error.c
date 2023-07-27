@@ -1,6 +1,7 @@
 #include "main.h"
 
 /**
+<<<<<<< HEAD
  * repeated_char -> counts the repetitions of a char
  * @input: input string
  * @i: index
@@ -32,6 +33,36 @@ int error_sep_op(char *input, int i, char last)
 {
 	int count = 0;
 
+=======
+ * repeated_char - counts the repetitions of a char
+ *
+ * @input: input string
+ * @i: index
+ * Return: repetitions
+ */
+int repeated_char(char *input, int i)
+{
+	if (*(input - 1) == *input)
+		return (repeated_char(input - 1, i + 1));
+
+	return (i);
+}
+
+/**
+ * error_sep_op - finds syntax errors
+ *
+ * @input: input string
+ * @i: index
+ * @last: last char read
+ * Return: index of error. 0 when there are no
+ * errors
+ */
+int error_sep_op(char *input, int i, char last)
+{
+	int count;
+
+	count = 0;
+>>>>>>> update
 	if (*input == '\0')
 		return (0);
 
@@ -68,7 +99,11 @@ int error_sep_op(char *input, int i, char last)
 		}
 	}
 
+<<<<<<< HEAD
 	return (error_sep_op(input + 1, i++, *input));
+=======
+	return (error_sep_op(input + 1, i + 1, *input));
+>>>>>>> update
 }
 
 /**
@@ -96,16 +131,25 @@ int first_char(char *input, int *i)
 }
 
 /**
+<<<<<<< HEAD
  * print_syntax_error -> prints when a syntax error is found
+=======
+ * print_syntax_error - prints when a syntax error is found
+>>>>>>> update
  *
  * @lineptr: data structure
  * @input: input string
  * @i: index of the error
  * @bool: to control msg error
+<<<<<<< HEAD
  *
  * Return: no return
  */
 
+=======
+ * Return: no return
+ */
+>>>>>>> update
 void print_syntax_error(shell_input *lineptr, char *input, int i, int bool)
 {
 	char *msg, *msg2, *msg3, *error, *counter;
@@ -150,18 +194,28 @@ void print_syntax_error(shell_input *lineptr, char *input, int i, int bool)
 	free(counter);
 }
 
+<<<<<<< HEAD
 
 
 /**
  * check_syntax_error -> intermediate function to
+=======
+/**
+ * check_syntax_error - intermediate function to
+>>>>>>> update
  * find and print a syntax error
  *
  * @lineptr: data structure
  * @input: input string
+<<<<<<< HEAD
  *
  * Return: 1 if there is an error. 0 in other case
  */
 
+=======
+ * Return: 1 if there is an error. 0 in other case
+ */
+>>>>>>> update
 int check_syntax_error(shell_input *lineptr, char *input)
 {
 	int begin = 0;

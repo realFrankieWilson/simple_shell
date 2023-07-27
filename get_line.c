@@ -1,39 +1,7 @@
 #include "main.h"
 
 /**
-<<<<<<< HEAD
- * exec_line -> finds builtins and commands
- * @lineptr: data relevant (args)
- *
-=======
- * exec_line - finds builtins and commands
- *
- * @lineptr: data relevant (args)
->>>>>>> update
- * Return: 1 on success.
- */
-int exec_line(shell_input *lineptr)
-{
-	int (*builtin)(shell_input *lineptr);
-
-	if (lineptr->args[0] == NULL)
-		return (1);
-
-	builtin = get_builtin(lineptr->args[0]);
-
-	if (builtin != NULL)
-		return (builtin(lineptr));
-
-	return (cmd_exec(lineptr));
-}
-<<<<<<< HEAD
-
-
-
-
-
-/**
- * bring_line -> assigns the line var for get_line
+ * bring_line - assigns the line var for get_line
  * @lineptr: Buffer that store the input str
  * @buffer: str that is been called to line
  * @n: size of line
@@ -65,18 +33,13 @@ void bring_line(char **lineptr, size_t *n, char *buffer, size_t j)
 		free(buffer);
 	}
 }
-
-
-
 /**
- * get_line -> Read inpt from stream
+ * get_line - Read inpt from stream
  * @lineptr: buffer that stores the input
  * @n: size of lineptr
  * @stream: stream to read from
- *
  * Return: The number of bytes
  */
-
 ssize_t get_line(char **lineptr, size_t *n, FILE *stream)
 {
 	int i;
@@ -85,12 +48,12 @@ ssize_t get_line(char **lineptr, size_t *n, FILE *stream)
 	char *buffer;
 	char t = 'z';
 
-	if (input != 0)
-		return (-1);
-	else
+	if (input == 0)
 		fflush(stream);
-
+	else
+		return (-1);
 	input = 0;
+
 	buffer = malloc(sizeof(char) * BUFSIZE);
 	if (buffer == 0)
 		return (-1);
@@ -119,5 +82,3 @@ ssize_t get_line(char **lineptr, size_t *n, FILE *stream)
 		input = 0;
 	return (retval);
 }
-=======
->>>>>>> update

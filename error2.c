@@ -119,4 +119,8 @@ void set_data(shell_input *lineptr, char **av)
 		lineptr->_environ[i] = str_dup(environ[i]);
 	lineptr->_environ[i] = NULL;
 	lineptr->pid = ito_a(getpid());
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> update

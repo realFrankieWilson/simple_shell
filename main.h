@@ -127,14 +127,19 @@ void free_line_list(line_list **head);
 r_var *add_rvar_node(r_var **head, int lvar, char *var, int lval);
 void free_rvar_list(r_var **head);
 
+<<<<<<< HEAD
 
 /******** STRING FUNCTION*****************/
+=======
+/* str */
+>>>>>>> update
 char *str_cat(char *dest, const char *src);
 char *str_cpy(char *dest, char *src);
 int str_cmp(char *s1, char *s2);
 char *_strchr(char *s, char c);
 int _strspn(char *s, char *accept);
 
+<<<<<<< HEAD
 /* str2.c */
 char *str_dup(const char *);
 int str_len(const char *);
@@ -144,11 +149,24 @@ void rev_string(char *q);
 
 
 
+=======
+>>>>>>> update
 /* mem.c */
 void mem_cpy(void *, const void *, unsigned int);
 void *_realloc(void *ptr, unsigned int, unsigned int);
 char **_reallocdp(char **, unsigned int, unsigned int);
 
+<<<<<<< HEAD
+=======
+/* str2.c */
+char *str_dup(const char *);
+int str_len(const char *);
+int cmp_chars(char str[], const char *);
+int is_digit(const char *s);
+
+/* str3.c */
+void rev_string(char *q);
+>>>>>>> update
 
 /* check_syntax_error.c */
 int repeated_char(char *, int);
@@ -180,6 +198,10 @@ char *rep_var(char *, shell_input *);
 /* get_line.c */
 void bring_line(char **lineptr, size_t *n, char *buffer, size_t j);
 ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
+<<<<<<< HEAD
+=======
+
+>>>>>>> update
 /* exec_line */
 int exec_line(shell_input *);
 
@@ -193,8 +215,11 @@ int cmd_exec(shell_input *);
 /* env1.c */
 char *_getenv(const char *name, char **_environ);
 int _env(shell_input *);
+<<<<<<< HEAD
 /* cd_shell.c */
 int cd_shell(shell_input *);
+=======
+>>>>>>> update
 
 /* env2.c */
 char *copy_info(char *, char *);
@@ -208,7 +233,12 @@ void cd_to(shell_input *);
 void cd_previous(shell_input *);
 void cd_to_home(shell_input *);
 
+<<<<<<< HEAD
 
+=======
+/* cd_shell.c */
+int cd_shell(shell_input *);
+>>>>>>> update
 
 /* get_builtin */
 int (*get_builtin(char *cmd))(shell_input *);

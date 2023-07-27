@@ -78,6 +78,7 @@ int _env(shell_input *lineptr)
 
 	return (1);
 }
+<<<<<<< HEAD
 
 
 
@@ -123,3 +124,5 @@ int cd_shell(shell_input *lineptr)
 
 	return (1);
 }
+=======
+>>>>>>> update

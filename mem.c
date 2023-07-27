@@ -1,7 +1,11 @@
 #include "main.h"
 
 /**
+<<<<<<< HEAD
  * mem_cpy - copies information between void pointers.
+=======
+ * memcpy - copies information between void pointers.
+>>>>>>> update
  * @newptr: destination pointer.
  * @ptr: source pointer
  * @size: size of the new pointer.

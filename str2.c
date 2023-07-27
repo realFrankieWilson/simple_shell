@@ -88,6 +88,7 @@ int is_digit(const char *s)
 	}
 	return (1);
 }
+<<<<<<< HEAD
 
 
 
@@ -122,3 +123,5 @@ void rev_string(char *s)
 		}
 	}
 }
+=======
+>>>>>>> update

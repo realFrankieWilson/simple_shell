@@ -37,7 +37,11 @@ sep_list *add_sep_node_end(sep_list **head, char sep)
 
 
 /**
+<<<<<<< HEAD
  * free_sep_list -> frees a sep_list
+=======
+ * free_sep_list - frees a sep_list
+>>>>>>> update
  * @head: head of the linked list.
  *
  * Return: no return.
@@ -63,20 +67,33 @@ void free_sep_list(sep_list **head)
 
 
 /**
+<<<<<<< HEAD
  * add_line_node_end -> adds a command line at the end
  * of a line_list.
  * @head: head of the linked list.
  * @line: command line
  *
+=======
+ * add_line_node_end - adds a command line at the end
+ * of a line_list.
+ * @head: head of the linked list.
+ * @line: command line.
+>>>>>>> update
  * Return: address of the head.
  */
 
 line_list *add_line_node_end(line_list **head, char *line)
 {
+<<<<<<< HEAD
 	line_list *temp;
 
 	line_list *new = malloc(sizeof(line_list));
 
+=======
+	line_list *new, *temp;
+
+	new = malloc(sizeof(line_list));
+>>>>>>> update
 	if (new == NULL)
 		return (NULL);
 
@@ -88,7 +105,10 @@ line_list *add_line_node_end(line_list **head, char *line)
 	{
 		*head = new;
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> update
 	else
 	{
 		while (temp->next != NULL)
@@ -109,7 +129,12 @@ line_list *add_line_node_end(line_list **head, char *line)
 
 void free_line_list(line_list **head)
 {
+<<<<<<< HEAD
 	line_list *temp, *curr;
+=======
+	line_list *temp;
+	line_list *curr;
+>>>>>>> update
 
 	if (head != NULL)
 	{

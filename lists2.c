@@ -1,7 +1,11 @@
 #include "main.h"
 
 /**
+<<<<<<< HEAD
  * add_rvar_node -> adds a variable at the end
+=======
+ * add_rvar_node - adds a variable at the end
+>>>>>>> update
  * of a r_var list.
  * @head: head of the linked list.
  * @lvar: length of the variable.
@@ -13,10 +17,16 @@
 
 r_var *add_rvar_node(r_var **head, int lvar, char *val, int lval)
 {
+<<<<<<< HEAD
 	r_var *temp;
 
 	r_var *new = malloc(sizeof(r_var));
 
+=======
+	r_var *new, *temp;
+
+	new = malloc(sizeof(r_var));
+>>>>>>> update
 	if (new == NULL)
 		return (NULL);
 
@@ -32,9 +42,13 @@ r_var *add_rvar_node(r_var **head, int lvar, char *val, int lval)
 	{
 		*head = new;
 	}
+<<<<<<< HEAD
 
 	else
 
+=======
+	else
+>>>>>>> update
 	{
 		while (temp->next != NULL)
 			temp = temp->next;
@@ -45,7 +59,11 @@ r_var *add_rvar_node(r_var **head, int lvar, char *val, int lval)
 }
 
 /**
+<<<<<<< HEAD
  * free_rvar_list -> frees a r_var list
+=======
+ * free_rvar_list - frees a r_var list
+>>>>>>> update
  * @head: head of the linked list
  *
  * Return: no return.
@@ -53,7 +71,12 @@ r_var *add_rvar_node(r_var **head, int lvar, char *val, int lval)
 
 void free_rvar_list(r_var **head)
 {
+<<<<<<< HEAD
 	r_var *temp, *curr;
+=======
+	r_var *temp;
+	r_var *curr;
+>>>>>>> update
 
 	if (head != NULL)
 	{

@@ -21,4 +21,8 @@ int main(int argc, char *argv[])
 	if (lineptr.status < 0)
 		return (255);
 	return (lineptr.status);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> update
