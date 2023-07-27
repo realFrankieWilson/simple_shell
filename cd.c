@@ -68,26 +68,26 @@ void cd_to(shell_input *lineptr)
 	char *dir, *cp_pwd, *cp_dir;
 
 	getcwd(pwd, sizeof(pwd));
-
 	dir = lineptr->args[1];
-	if (chdir(dir) == -1)
+	if (chdir(dir) != -1)
+	{
+		cp_pwd = str_dup(pwd);
+		set_env("OLDPWD", cp_pwd, lineptr);
+
+		cp_dir = str_dup(dir);
+		set_env("PWD", cp_dir, lineptr);
+
+		free(cp_pwd);
+		free(cp_dir);
+
+		lineptr->status = 0;
+		chdir(dir);
+	}
+	else
 	{
 		get_error(lineptr, 2);
 		return;
 	}
-
-	cp_pwd = str_dup(pwd);
-	set_env("OLDPWD", cp_pwd, lineptr);
-
-	cp_dir = str_dup(dir);
-	set_env("PWD", cp_dir, lineptr);
-
-	free(cp_pwd);
-	free(cp_dir);
-
-	lineptr->status = 0;
-
-	chdir(dir);
 }
 
 
@@ -116,10 +116,11 @@ void cd_previous(shell_input *lineptr)
 
 	set_env("OLDPWD", cp_pwd, lineptr);
 
-	if (chdir(cp_oldpwd) == -1)
-		set_env("PWD", cp_pwd, lineptr);
-	else
+	if (chdir(cp_oldpwd) != -1)
 		set_env("PWD", cp_oldpwd, lineptr);
+	else
+		set_env("PWD", cp_pwd, lineptr);
+
 
 	p_pwd = _getenv("PWD", lineptr->_environ);
 
@@ -131,7 +132,6 @@ void cd_previous(shell_input *lineptr)
 		free(cp_oldpwd);
 
 	lineptr->status = 0;
-
 	chdir(p_pwd);
 }
 
@@ -145,12 +145,11 @@ void cd_previous(shell_input *lineptr)
  */
 void cd_to_home(shell_input *lineptr)
 {
-	char *home = _getenv("HOME", lineptr->_environ);
+	char *p_pwd, *home;
 	char pwd[PATH_MAX];
-	char *p_pwd = str_dup(pwd);
 
 	getcwd(pwd, sizeof(pwd));
-
+	p_pwd = str_dup(pwd);
 	home = _getenv("HOME", lineptr->_environ);
 
 	if (home == NULL)
