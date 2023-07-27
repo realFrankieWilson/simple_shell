@@ -10,8 +10,6 @@
 #include <limits.h>
 #include <string.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <stddef.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -28,7 +26,6 @@
 #define PROMPT "$ "
 
 
-<<<<<<< HEAD
 
 
 /* Points to an array of pointers to strings called the "environment" */
@@ -54,57 +51,6 @@ typedef struct data
 	char **_environ;
 	char *pid;
 } shell_input;
-=======
-/*********** USER DEFINED PROTOTYPES FOR BASIC FUNCTIONS************/
-int str_cmp(char *str1, char *str2);
-int putchar_(char c);
-char *str_dup(char *org);
-void print_s(char *str, int new_l);
-int print_num(int n);
-
-/********** COMMANDS AND ARGUMENTS FUCNTIONS (cmds_and_arguments) **********/
-void cmd_line(char *lineptr, size_t size, int cmd_ctr, char **av);
-void create_ppid(char **, char *, int, char **);
-char **token_access(char *lineptr, const char *delim, int token_count);
-char **token_separator(int token_count, char *lineptr, const char *delim);
-int count_token(char *lineptr, const char *delim);
-
-/********** THE STD BUILTIN FUNCTIONS **********/
-int std_built_ins(char **av, char *usr_in);
-void exit_shell(char *usr_in);
-void (*check_builtin(char *name_fun))(char *name_fun);
-void env_shell(char *lineptr);
-void cd_shell(char *lineptr);
-
-
-/********** HELPER FUNCTIONS (general function)**********/
-int str_len(char *str);
-void twice_free(char **ptr);
-void exec_error(char *av, int cmd_count, char *tmp_cmd);
-void error_msg(char *av, int cmd_count, char *cmd);
-void free_once(int, ...);
-
-/********** PATH FUNCTION FINDER**********/
-char *find_path_int(char *cmd);
-int find_path(char *);
-char **str_separator(int i, char *str);
-char *create_path(char *d_path, char *f_path);
-char *search_direct(char **str_ptr, char *cmd);
-
-/******** PARSING FUNCTIONS **********/
-
-/**
- * struct build_d -> the built in functions.
- * @built: The name of the build in command.
- * @f: A pointer to the right builtin function.
- */
-
-typedef struct build_d
-{
-	char *built;
-	void (*f)(char *);
-} buildin_t;
->>>>>>> refs/remotes/origin/update
 
 
 
@@ -172,36 +118,34 @@ typedef struct builtin_s
 
 
 /* lists.c */
-sep_list *add_sep_node_end(sep_list **head, char sep);
-void free_sep_list(sep_list **head);
-line_list *add_line_node_end(line_list **head, char *line);
+sep_list *add_sep_node_end(sep_list **, char);
+void free_sep_list(sep_list **);
+line_list *add_line_node_end(line_list **, char *);
 void free_line_list(line_list **head);
 
 /*lists2.c */
-r_var *add_rvar_node(r_var **head, int lvar, char *var, int lval);
+r_var *add_rvar_node(r_var **, int, char *, int);
 void free_rvar_list(r_var **head);
 
-/* str */
-char *str_cat(char *dest, const char *src);
-char *str_cpy(char *dest, char *src);
-int str_cmp(char *s1, char *s2);
-char *_strchr(char *s, char c);
-int _strspn(char *s, char *accept);
 
-/* mem.c */
-void mem_cpy(void *, const void *, unsigned int);
-void *_realloc(void *ptr, unsigned int, unsigned int);
-char **_reallocdp(char **, unsigned int, unsigned int);
-
+/***************STRING FUNCIONS AND MEMCPY**************/
+/* str1 */
+char *str_cat(char *, const char *);
+char *str_cpy(char *, char *);
+int str_cmp(char *, char *);
 /* str2.c */
 char *str_dup(const char *);
 int str_len(const char *);
-int cmp_chars(char str[], const char *);
-int is_digit(const char *s);
+int is_digit(const char *);
+void rev_string(char *);
 
-/* str3.c */
-void rev_string(char *q);
+/* mem.c */
+void mem_cpy(void *, const void *, unsigned int);
+void *rea_lloc(void *, unsigned int, unsigned int);
+char **rea_llocdp(char **, unsigned int, unsigned int);
 
+
+/***************SYNTAX ChECK**************************/
 /* check_syntax_error.c */
 int repeated_char(char *, int);
 int error_sep_op(char *, int, char);
@@ -209,8 +153,9 @@ int first_char(char *, int *);
 void print_syntax_error(shell_input *, char *, int, int);
 int check_syntax_error(shell_input *, char *);
 
+
+/****************** LOOP AND OTHER REALATED FUNCTIONS *****************/
 /* shell_loop.c */
-char *without_comment(char *in);
 void shell_loop(shell_input *);
 
 /* read_line.c */
